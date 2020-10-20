@@ -1,45 +1,40 @@
 <!--
  * @Author: your name
- * @Date: 2020-10-04 20:31:19
- * @LastEditTime: 2020-10-19 23:41:32
+ * @Date: 2020-10-20 21:57:15
+ * @LastEditTime: 2020-10-20 22:48:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\views\cart\Cart.vue
+ * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\components\common\toast\Toast.vue
 -->
 <!--  -->
 <template>
-<div class='cart'>
-	<!-- 导航 -->
-	<nav-bar class="nav-bar">
-		<div slot="center">购物车({{length}})</div>
-	</nav-bar>
-	<!-- 商品列表 -->
-	<cart-list/>
-	<!-- 底部汇总 -->
-	<cart-bottom-bar/>
+<div class='toast'  v-show="isShow">
+	<div>{{message}}</div>
 </div>
 </template>
 
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import NavBar from 'components/common/navbar/NavBar'
-import CartList from './childComps/CartList'
-import CartBottomBar from './childComps/CartBottomBar'
 
-import {mapGetters} from 'vuex' // 辅助函数
 export default {
-name: 'cart',
 //import引入的组件需要注入到对象中才能使用
-components: {
-	NavBar,
-	CartList,
-	CartBottomBar
+components: {},
+props: {
+	// message: {
+	// 	type: String,
+	// 	default: ''
+	// },
+	// show: {
+	// 	type: Boolean,
+	// 	defaule: false
+	// }
 },
 data() {
 //这里存放数据
 	return {
-		count: 0
+		message: '',
+		isShow: false
 	};
 },
 //生命周期 - 创建完成（可以访问当前this实例）
@@ -51,20 +46,19 @@ mounted() {
 
 },
 //监听属性 类似于data概念
-computed: {
-	// 第一种语法， 直接用getters里的属性
-	// ...mapGetters(['cartLength', 'cartList'])
-	// 第二种语法，可以改名字
-	...mapGetters({
-		length: 'cartLength',
-		list: 'cartList'
-	})
-},
+computed: {},
 //监控data中的数据变化
 watch: {},
 //方法集合
 methods: {
-
+	show (message='默认文字', duration=2000) {
+		this.isShow = true
+		this.message = message
+		setTimeout(() => {
+			this.isShow = false
+			this.message = ''
+		}, duration)
+	}
 },
 activated() {}, //如果页面有keep-alive缓存功能，路由活跃时会触发
 deactivated() {}, //如果页面有keep-alive缓存功能，路由离开时这个函数会触发
@@ -78,12 +72,14 @@ destroyed() {}, //生命周期 - 销毁完成
 </script>
 <style lang='scss' scoped>
 /* @import url(); 引入公共css类 */
-.cart {
-	height: 100vh;
-}
-.nav-bar {
-	background-color: var(--color-tint);
+.toast {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 8px 10px;
 	color: #fff;
-	font-weight: 700;
+	background-color: rgba(1,1,1,.7);
+	z-index: 9;
 }
 </style>

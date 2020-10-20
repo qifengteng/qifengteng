@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-10-08 00:46:29
- * @LastEditTime: 2020-10-11 17:26:58
+ * @LastEditTime: 2020-10-11 23:11:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\components\common\scroll\scroll.vue
@@ -26,15 +26,11 @@ components: {},
 props: {
 	probeType: {
 		type: Number,
-		default () {
-			return 0
-		}
+		default: 0
 	},
 	pullUpLoad: {
 		type: Boolean,
-		default () {
-			return false
-		}
+		default: false
 	}
 },
 data() {
@@ -59,10 +55,12 @@ mounted() {
 	this.scroll.on('scroll', (position) => {
 		this.$emit('scroll', position)
 	})
-	// 3. 监听上拉事件 监听pullingUp事件
-	this.scroll.on('pullingUp', () => {
-		this.$emit('pullingUp')
-	})
+	// 3. 监听上拉事件 监听pullingUp事件 当设置为2或者3的时候才做监听
+	if (this.probeType === 2 || this.probeType === 3) {
+		this.scroll.on('pullingUp', () => {
+			this.$emit('pullingUp')
+		})
+	}
 },
 //监听属性 类似于data概念
 computed: {},
@@ -72,11 +70,19 @@ watch: {},
 methods: {
 	// 封装scrollTo方法， 方便调用
 	scrollTo (x, y, time=500) {
-		this.scroll.scrollTo(x, y, time)
+		// this.scroll && 逻辑与，调用这个方法的时候先看看有没有这个对象，有才进行后面的调用
+		this.scroll && this.scroll.scrollTo(x, y, time)
 	},
 	// 封装finishPullUp方法，上啦加载完成之后回调
 	finishPullUp () {
-		this.scroll.finishPullUp()
+		this.scroll && this.scroll.finishPullUp()
+	},
+	// 封装refresh方法，方便调用
+	refresh () {
+		this.scroll && this.scroll.refresh()
+	},
+	getScrollY () {
+		return this.scroll ? this.scroll.y : 0
 	}
 },
 beforeCreate() {}, //生命周期 - 创建之前

@@ -1,65 +1,53 @@
 <!--
  * @Author: your name
- * @Date: 2020-10-04 20:31:19
- * @LastEditTime: 2020-10-19 23:41:32
+ * @Date: 2020-10-13 22:55:12
+ * @LastEditTime: 2020-10-13 23:12:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\views\cart\Cart.vue
+ * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\views\detail\childComps\DetailSwiper.vue
 -->
 <!--  -->
 <template>
-<div class='cart'>
-	<!-- 导航 -->
-	<nav-bar class="nav-bar">
-		<div slot="center">购物车({{length}})</div>
-	</nav-bar>
-	<!-- 商品列表 -->
-	<cart-list/>
-	<!-- 底部汇总 -->
-	<cart-bottom-bar/>
-</div>
+	<swiper>
+		<swiper-item class="swiper-item" v-for="item in topImages">
+			<img :src="item" alt="">
+		</swiper-item>
+	</swiper>
 </template>
-
+	
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import NavBar from 'components/common/navbar/NavBar'
-import CartList from './childComps/CartList'
-import CartBottomBar from './childComps/CartBottomBar'
-
-import {mapGetters} from 'vuex' // 辅助函数
+import {Swiper, SwiperItem} from 'components/common/swiper'
 export default {
-name: 'cart',
 //import引入的组件需要注入到对象中才能使用
+props: {
+	topImages: {
+		type: Array,
+		default () {
+			return []
+		}
+	}
+},
 components: {
-	NavBar,
-	CartList,
-	CartBottomBar
+	Swiper,
+	SwiperItem
 },
 data() {
 //这里存放数据
-	return {
-		count: 0
-	};
+return {
+
+};
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
-
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
 
 },
 //监听属性 类似于data概念
-computed: {
-	// 第一种语法， 直接用getters里的属性
-	// ...mapGetters(['cartLength', 'cartList'])
-	// 第二种语法，可以改名字
-	...mapGetters({
-		length: 'cartLength',
-		list: 'cartList'
-	})
-},
+computed: {},
 //监控data中的数据变化
 watch: {},
 //方法集合
@@ -78,12 +66,8 @@ destroyed() {}, //生命周期 - 销毁完成
 </script>
 <style lang='scss' scoped>
 /* @import url(); 引入公共css类 */
-.cart {
-	height: 100vh;
-}
-.nav-bar {
-	background-color: var(--color-tint);
-	color: #fff;
-	font-weight: 700;
+.swiper-item {
+	height: 300px;
+	overflow: hidden;
 }
 </style>

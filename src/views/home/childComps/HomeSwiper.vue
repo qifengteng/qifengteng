@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-10-05 23:48:58
- * @LastEditTime: 2020-10-05 23:59:05
+ * @LastEditTime: 2020-10-11 22:10:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\views\home\childComps\HomeSwiper.vue
@@ -11,7 +11,7 @@
 	<swiper>
 		<swiper-item v-for="(item, index) in banners" :key="index">
 			<a :href="item.link">
-				<img :src="item.image" alt="">
+				<img :src="item.image" alt="" @load="imageLoad">
 			</a>
 		</swiper-item>
 	</swiper>
@@ -39,9 +39,9 @@ props: {
 },
 data() {
 //这里存放数据
-return {
-
-};
+	return {
+		isLoad: false
+	};
 },
 //监听属性 类似于data概念
 computed: {},
@@ -49,7 +49,13 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-
+	imageLoad () {
+		// 为了不让多次发出事件（注意：这里不进行多次调用和debounce的区别），这里用变量记录状态，下次不用发出
+		if (!this.isLoad) {
+			this.$emit('SwiperImageLoad')
+			this.isLoad = true
+		}
+	}
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {

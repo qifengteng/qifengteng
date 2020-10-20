@@ -1,17 +1,15 @@
 <!--
  * @Author: your name
  * @Date: 2020-10-07 00:07:34
- * @LastEditTime: 2020-10-11 16:14:39
+ * @LastEditTime: 2020-10-20 23:22:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\components\content\goods\GoodsListItem.vue
 -->
 <!--  -->
 <template>
-<div class='goods-item'>
-	<a :href="goodsItem.link">
-		<img :src="goodsItem.show.img" alt="">
-	</a>
+<div class='goods-item' @click="itemClick">
+	<img v-lazy="showImg" alt="" @load="imageLoad">
 	<div class="goods-info">
 		<p>{{goodsItem.title}}</p>
 		<span class="price">{{goodsItem.price}}</span>
@@ -39,16 +37,29 @@ props: {
 data() {
 //这里存放数据
 	return {
-
 	};
 },
 //监听属性 类似于data概念
-computed: {},
+computed: {
+	showImg () {
+		return this.goodsItem.image || this.goodsItem.show.img
+	}
+},
 //监控data中的数据变化
 watch: {},
 //方法集合
 methods: {
-
+	// vue中img可以用@load来监听图片加载完成
+	imageLoad () {
+		if (this.$route.path.indexOf('/home') > -1) {
+			this.$bus.$emit('itemImageLoad')
+		} else if (this.$route.path.indexOf('/detail') > -1) {
+			this.$bus.$emit('detailItemImageLoad')
+		}
+	},
+	itemClick () {
+		this.$router.push('/detail/' + this.goodsItem.iid)
+	}
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {

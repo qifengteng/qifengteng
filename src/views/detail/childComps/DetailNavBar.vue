@@ -1,45 +1,44 @@
 <!--
  * @Author: your name
- * @Date: 2020-10-04 20:31:19
- * @LastEditTime: 2020-10-19 23:41:32
+ * @Date: 2020-10-11 23:56:37
+ * @LastEditTime: 2020-10-18 20:14:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\views\cart\Cart.vue
+ * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\components\common\navbar\childComps\DetailNavBar.vue
 -->
 <!--  -->
 <template>
-<div class='cart'>
-	<!-- 导航 -->
-	<nav-bar class="nav-bar">
-		<div slot="center">购物车({{length}})</div>
+<div class='detailNavBar'>
+	<nav-bar>
+		<div slot="left" class="back" @click="backClick">
+			<img src="~assets/img/common/back.svg" alt="">
+		</div>
+		<div slot="center" class="title">
+			<div v-for="(item, index) in titles"
+					 class="title-item"
+					 @click="itemClick(index)"
+					 :class="{active: currentIndex === index}">{{item}}</div>
+		</div>
 	</nav-bar>
-	<!-- 商品列表 -->
-	<cart-list/>
-	<!-- 底部汇总 -->
-	<cart-bottom-bar/>
 </div>
 </template>
 
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import NavBar from 'components/common/navbar/NavBar'
-import CartList from './childComps/CartList'
-import CartBottomBar from './childComps/CartBottomBar'
+import NavBar from 'components/common/navbar/NavBar.vue'
 
-import {mapGetters} from 'vuex' // 辅助函数
 export default {
-name: 'cart',
+name: 'detailNavBar',
 //import引入的组件需要注入到对象中才能使用
 components: {
-	NavBar,
-	CartList,
-	CartBottomBar
+	NavBar
 },
 data() {
 //这里存放数据
 	return {
-		count: 0
+		titles: ['商品', '参数', '评论', '推荐'],
+		currentIndex: 0
 	};
 },
 //生命周期 - 创建完成（可以访问当前this实例）
@@ -51,20 +50,18 @@ mounted() {
 
 },
 //监听属性 类似于data概念
-computed: {
-	// 第一种语法， 直接用getters里的属性
-	// ...mapGetters(['cartLength', 'cartList'])
-	// 第二种语法，可以改名字
-	...mapGetters({
-		length: 'cartLength',
-		list: 'cartList'
-	})
-},
+computed: {},
 //监控data中的数据变化
 watch: {},
 //方法集合
 methods: {
-
+	itemClick (index) {
+		this.currentIndex = index
+		this.$emit('itemClick', index)
+	},
+	backClick () {
+		this.$router.back()
+	}
 },
 activated() {}, //如果页面有keep-alive缓存功能，路由活跃时会触发
 deactivated() {}, //如果页面有keep-alive缓存功能，路由离开时这个函数会触发
@@ -78,12 +75,17 @@ destroyed() {}, //生命周期 - 销毁完成
 </script>
 <style lang='scss' scoped>
 /* @import url(); 引入公共css类 */
-.cart {
-	height: 100vh;
+.title {
+	display: flex;
+	font-size: 13px;
 }
-.nav-bar {
-	background-color: var(--color-tint);
-	color: #fff;
-	font-weight: 700;
+.title-item {
+	flex: 1
+}
+.active {
+	color: var(--color-high-text);
+}
+.back {
+	margin-top: 6px;
 }
 </style>

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-04 20:23:37
- * @LastEditTime: 2020-10-06 23:19:59
+ * @LastEditTime: 2020-10-11 23:51:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\router\index.js
@@ -14,6 +14,7 @@ const Home = () => import('views/home/Home')
 const Category = () => import('views/category/Category')
 const Cart = () => import('views/cart/Cart')
 const Profile = () => import('views/profile/Profile')
+const Detail = () => import('views/detail/Detail')
 
 
 // 1. 安装插件
@@ -40,6 +41,9 @@ const routes = [
 	{
 		path: '/profile',
 		component: Profile
+	},{
+		path: '/detail/:iid',
+		component: Detail
 	}
 ]
 const router = new VueRouter({
