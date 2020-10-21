@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-05 22:56:14
- * @LastEditTime: 2020-10-21 22:40:38
+ * @LastEditTime: 2020-10-22 01:08:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\src\network\request.js
@@ -51,7 +51,7 @@ import axios from 'axios'
 export function request(config) {
   // 1. 创建axios实例
   const instance = axios.create({
-    baseURL: 'http://123.207.32.32:8000/api/h8',
+    baseURL: 'http://123.207.32.32:8000/api/**',
     timeout: 5000
   })
   // 2. axios的拦截器
