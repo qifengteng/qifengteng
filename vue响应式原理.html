@@ -1,0 +1,35 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-21 23:17:39
+ * @LastEditTime: 2020-10-21 23:47:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \01.vue初体验c:\Users\Administrator\qifengteng\vue响应式原理.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<!-- 明白两个问题
+	1. app.message修改数据， vue内部是如何监听到数据的改变的
+	Object.definedProperty -> 通过这个技术监听对象属性的改变
+	2. 当数据发生改变， VUE是如何通知那些人，界面发生改变
+	发布订阅者模式 -->
+	<div id="app">
+		{{message}}
+	</div>
+	<script src="./node_modules/vue/dist/vue.js"></script>
+	<script>
+		const app = new Vue({
+			el: '#app',
+			data: {
+				message: '你好啊，杨展君'
+			}
+		})
+	</script>
+</body>
+</html>
